@@ -11,9 +11,9 @@ export default defineConfig({
       includeAssets: ["favicon.ico", "apple-touch-icon.png"],
       injectRegister: "auto", //ここの記述
       manifest: {
-        name: "Through the Ages Counter",
-        short_name: "TtA Counter",
-        description: "スルージエイジズカウンター",
+        name: "It's a Wonderful World Score Counter",
+        short_name: "IWW Counter",
+        description: "イッツアワンダフルワールド得点集計",
         theme_color: "#ffffff",
         icons: [
           {

@@ -1,3 +1,3 @@
-# スルー・ジ・エイジズ　科学・文化カウンター
+# いっつあワンダフルワールド得点集計
 
-https://tamura2004.github.io/tth/
+https://tamura2004.github.io/iww/
