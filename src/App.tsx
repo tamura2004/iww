@@ -16,14 +16,14 @@ const darkTheme = createTheme({
 });
 
 export default function App() {
-  const [nation, setNation] = useState(Nation.NorthAmerica);
+  const [nation, setnation] = useState(Nation.NorthAmerica);
   const { worldScore, setNationCategoryScore } = useWorldScore();
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <TabContext value={nation}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <TabList onChange={(_e, newValue) => setNation(newValue)}>
+          <TabList onChange={(_e, newValue) => setnation(newValue)}>
             {Object.values(Nation).map((nation) => (
               <Tab key={nation} label={nation} value={nation} />
             ))}
