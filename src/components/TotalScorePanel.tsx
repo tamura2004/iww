@@ -1,15 +1,20 @@
 import { Box, Typography } from "@mui/material";
 import { BasePanel } from "./BasePanel.tsx";
+import { Nation } from "../models/Nation.ts";
 
-export const TotalScorePanel = ({
-  label,
-  totalScore,
-}: {
+type Props = {
+  nation: Nation;
   label: string;
   totalScore: number;
-}) => {
+};
+
+export const TotalScorePanel = ({
+  nation,
+  label,
+  totalScore,
+}: Props) => {
   return (
-    <BasePanel>
+    <BasePanel nation={nation}>
       <Typography
         variant="h5"
         sx={{

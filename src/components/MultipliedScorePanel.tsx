@@ -2,13 +2,15 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import { BasePanel } from "./BasePanel.tsx";
 import { Category } from "../models/Category.ts";
+import {Nation} from "../models/Nation.ts";
 
 type Props = {
+  nation: Nation;
   category: Category;
   setCategoryScore: (category: Category, score: number) => void;
 };
 
-export const MultipliedScorePanel = ({ category, setCategoryScore }: Props) => {
+export const MultipliedScorePanel = ({ nation, category, setCategoryScore }: Props) => {
   const [basePoint, setBasePoint] = React.useState(0);
   const [multiplier, setMultiplier] = React.useState(0);
   const total = basePoint * multiplier;
@@ -43,7 +45,7 @@ export const MultipliedScorePanel = ({ category, setCategoryScore }: Props) => {
   };
 
   return (
-    <BasePanel onClick={handleClick}>
+    <BasePanel onClick={handleClick} nation={nation}>
       <Typography
         variant="h5"
         sx={{

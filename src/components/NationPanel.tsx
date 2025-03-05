@@ -44,17 +44,20 @@ export const NationPanel = ({
               key={category}
               label={category + "：" + nation}
               totalScore={totalScore}
+              nation={nation}
             />
           ) : category === Category.Fix ? (
             <FixedScorePanel
               category={category}
               setCategoryScore={setCategoryScore}
+              nation={nation}
             />
           ) : (
             <MultipliedScorePanel
               key={category}
               category={category}
               setCategoryScore={setCategoryScore}
+              nation={nation}
             />
           ),
         )}

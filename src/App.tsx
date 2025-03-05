@@ -8,6 +8,7 @@ import { useState } from "react";
 import { Nation } from "./models/Nation.ts";
 import { NationPanel } from "./components/NationPanel.tsx";
 import { useWorldScore } from "./hooks/useWorldScore.ts";
+import { RankingPanel } from "./components/RankingPanel.tsx";
 
 const darkTheme = createTheme({
   palette: {
@@ -16,15 +17,16 @@ const darkTheme = createTheme({
 });
 
 export default function App() {
-  const [nation, setnation] = useState(Nation.NorthAmerica);
+  const [nation, setNation] = useState(Nation.Aztec);
   const { worldScore, setNationCategoryScore } = useWorldScore();
+  const tabKeys = [...Object.values(Nation), "順位"];
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <TabContext value={nation}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <TabList onChange={(_e, newValue) => setnation(newValue)}>
-            {Object.values(Nation).map((nation) => (
+          <TabList onChange={(_e, newValue) => setNation(newValue)}>
+            {tabKeys.map((nation) => (
               <Tab key={nation} label={nation} value={nation} />
             ))}
           </TabList>
@@ -37,6 +39,7 @@ export default function App() {
             setNationCategoryScore={setNationCategoryScore}
           />
         ))}
+        <RankingPanel worldScore={worldScore} />
       </TabContext>
     </ThemeProvider>
   );

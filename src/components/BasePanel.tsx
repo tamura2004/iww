@@ -1,13 +1,15 @@
 import { Box } from "@mui/material";
-import { blue } from "@mui/material/colors";
 import React, { ReactNode } from "react";
+import { Nation, NationColor } from "../models/Nation.ts";
 
 export const BasePanel = ({
   children,
   onClick,
+  nation,
 }: {
   children: ReactNode;
   onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
+  nation: Nation;
 }) => {
   return (
     <Box
@@ -17,7 +19,7 @@ export const BasePanel = ({
         m: 1,
         width: "47%",
         height: "22vh",
-        bgcolor: blue[500],
+        bgcolor: NationColor[nation],
         borderRadius: 2,
         touchAction: "none",
         position: "relative",
