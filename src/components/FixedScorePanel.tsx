@@ -5,15 +5,15 @@ import { Category } from "../models/Category.ts";
 
 type Props = {
   category: Category;
-  handleUpdateScore: (category: Category, value: number) => void;
+  setCategoryScore: (category: Category, score: number) => void;
 };
 
-export const FixedScorePanel = ({ category, handleUpdateScore }: Props) => {
+export const FixedScorePanel = ({ category, setCategoryScore }: Props) => {
   const [score, setScore] = React.useState(0);
   const addScore = (diff: number) => {
     setScore((prevScore) => {
       const newScore = prevScore + diff;
-      handleUpdateScore(category, newScore);
+      setCategoryScore(category, newScore);
       return newScore;
     })
   }

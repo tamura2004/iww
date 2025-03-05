@@ -7,6 +7,7 @@ import Tab from "@mui/material/Tab";
 import { useState } from "react";
 import { Nation } from "./models/Nation.ts";
 import { NationPanel } from "./components/NationPanel.tsx";
+import { useWorldScore } from "./hooks/useWorldScore.ts";
 
 const darkTheme = createTheme({
   palette: {
@@ -16,6 +17,7 @@ const darkTheme = createTheme({
 
 export default function App() {
   const [nation, setNation] = useState(Nation.NorthAmerica);
+  const { worldScore, setNationCategoryScore } = useWorldScore();
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
@@ -28,7 +30,12 @@ export default function App() {
           </TabList>
         </Box>
         {Object.values(Nation).map((nation) => (
-          <NationPanel key={nation} nation={nation} />
+          <NationPanel
+            key={nation}
+            nation={nation}
+            nationScore={worldScore[nation]}
+            setNationCategoryScore={setNationCategoryScore}
+          />
         ))}
       </TabContext>
     </ThemeProvider>

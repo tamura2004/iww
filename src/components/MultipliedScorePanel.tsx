@@ -5,24 +5,24 @@ import { Category } from "../models/Category.ts";
 
 type Props = {
   category: Category;
-  handleUpdateScore: (category: Category, value: number) => void;
+  setCategoryScore: (category: Category, score: number) => void;
 };
 
-export const MultipliedScorePanel = ({ category, handleUpdateScore }: Props) => {
+export const MultipliedScorePanel = ({ category, setCategoryScore }: Props) => {
   const [basePoint, setBasePoint] = React.useState(0);
   const [multiplier, setMultiplier] = React.useState(0);
   const total = basePoint * multiplier;
   const updateBasePoint = (diff: number) => {
     setBasePoint((prevBasePoint) => {
       const newBasePoint = prevBasePoint + diff;
-      handleUpdateScore(category, newBasePoint * multiplier);
+      setCategoryScore(category, newBasePoint * multiplier);
       return newBasePoint;
     });
   }
   const updateMultiplier = (diff: number) => {
     setMultiplier((prevMultiplier) => {
       const newMultiplier = prevMultiplier + diff;
-      handleUpdateScore(category, basePoint * newMultiplier);
+      setCategoryScore(category, basePoint * newMultiplier);
       return newMultiplier;
     });
   }

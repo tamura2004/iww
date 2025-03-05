@@ -1,31 +1,32 @@
-import {Category} from "../models/Category.ts";
-import {Nation} from "../models/Nation.ts";
-import {useState} from "react";
+import { Category } from "../models/Category.ts";
+import { Nation } from "../models/Nation.ts";
 import TabPanel from "@mui/lab/TabPanel";
-import {Box} from "@mui/material";
-import {TotalScorePanel} from "./TotalScorePanel.tsx";
-import {FixedScorePanel} from "./FixedScorePanel.tsx";
-import {MultipliedScorePanel} from "./MultipliedScorePanel.tsx";
+import { Box } from "@mui/material";
+import { TotalScorePanel } from "./TotalScorePanel.tsx";
+import { FixedScorePanel } from "./FixedScorePanel.tsx";
+import { MultipliedScorePanel } from "./MultipliedScorePanel.tsx";
 
-const initialScore: Record<Category, number> = Object.values(Category).reduce(
-  (acc, category) => {
-    acc[category] = 0;
-    return acc;
-  },
-  {} as Record<Category, number>,
-);
+type Props = {
+  nation: Nation;
+  nationScore: Record<Category, number>;
+  setNationCategoryScore: (
+    nation: Nation,
+    category: Category,
+    score: number,
+  ) => void;
+};
 
-export const NationPanel = ({ nation }: { nation: Nation }) => {
-  const [score, setScore] = useState(initialScore);
-  const totalScore = Object.values(score).reduce((acc, s) => {
-    return acc + s;
-  }, 0);
-  const handleUpdateScore = (category: Category, value: number) =>
-    setScore({
-      ...score,
-      [category]: value,
-    });
-
+export const NationPanel = ({
+  nation,
+  nationScore,
+  setNationCategoryScore,
+}: Props) => {
+  const totalScore = Object.values(nationScore).reduce(
+    (acc, score) => acc + score,
+    0,
+  );
+  const setCategoryScore = (category: Category, score: number) =>
+    setNationCategoryScore(nation, category, score);
   return (
     <TabPanel value={nation} sx={{ padding: 0 }}>
       <Box
@@ -41,19 +42,19 @@ export const NationPanel = ({ nation }: { nation: Nation }) => {
           category === Category.Total ? (
             <TotalScorePanel
               key={category}
-              label={category}
+              label={category + "：" + nation}
               totalScore={totalScore}
             />
           ) : category === Category.Fix ? (
             <FixedScorePanel
               category={category}
-              handleUpdateScore={handleUpdateScore}
+              setCategoryScore={setCategoryScore}
             />
           ) : (
             <MultipliedScorePanel
               key={category}
               category={category}
-              handleUpdateScore={handleUpdateScore}
+              setCategoryScore={setCategoryScore}
             />
           ),
         )}
