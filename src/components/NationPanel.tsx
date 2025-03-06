@@ -42,7 +42,7 @@ export const NationPanel = ({
           category === Category.Total ? (
             <TotalScorePanel
               key={category}
-              label={category + "：" + nation}
+              label={category}
               totalScore={totalScore}
               nation={nation}
             />

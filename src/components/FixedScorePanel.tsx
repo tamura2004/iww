@@ -42,11 +42,12 @@ export const FixedScorePanel = ({
           left: 12,
           verticalAlign: "bottom",
           fontWeight: "bold",
+          fontSize: { sm: "3vh", xs: "2.5vh" },
         }}
       >
         {category}
       </Typography>
-      <Box sx={{ typography: "h1", fontWeight: "bold", fontSize: "12vh" }}>
+      <Box sx={{ typography: "h1", fontWeight: "bold", fontSize: { sm: "12vh", xs: "8vh" } }}>
         {baseScore}
       </Box>
     </BasePanel>

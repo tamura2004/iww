@@ -7,10 +7,12 @@ type Props = {
 };
 
 export const RankingPanel = ({ getNationTotalScore }: Props) => {
-  const ranking = Object.values(Nation).map((nation) => ({
-    nation,
-    score: getNationTotalScore(nation),
-  })).sort((a, b) => b.score - a.score);
+  const ranking = Object.values(Nation)
+    .map((nation) => ({
+      nation,
+      score: getNationTotalScore(nation),
+    }))
+    .sort((a, b) => b.score - a.score);
 
   return (
     <TabPanel value="順位" sx={{ padding: 0 }}>
@@ -34,17 +36,39 @@ export const RankingPanel = ({ getNationTotalScore }: Props) => {
               gap: 2,
               alignItems: "center",
               width: "100%",
-              height: "17vh",
+              height: "16vh",
               bgcolor: NationColor[nation as Nation],
               borderRadius: 2,
               justifyContent: "space-between",
             }}
           >
-            <Box sx={{ typography: "h3", fontWeight: "bold" }}>
+            <Box
+              sx={{
+                typography: "h3",
+                fontWeight: "bold",
+                fontSize: { sm: "5vh", xs: "3vh" },
+              }}
+            >
               {index + 1}位
             </Box>
-            <Box sx={{ typography: "h3", fontWeight: "bold" }}>{nation}</Box>
-            <Box sx={{ typography: "h2", fontWeight: "bold" }}>{score}点</Box>
+            <Box
+              sx={{
+                typography: "h3",
+                fontWeight: "bold",
+                fontSize: { sm: "5vh", xs: "3vh" },
+              }}
+            >
+              {nation}
+            </Box>
+            <Box
+              sx={{
+                typography: "h2",
+                fontWeight: "bold",
+                fontSize: { sm: "5vh", xs: "3vh" },
+              }}
+            >
+              {score}点
+            </Box>
           </Box>
         ))}
       </Box>

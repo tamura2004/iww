@@ -26,7 +26,7 @@ export default function App() {
       <CssBaseline />
       <TabContext value={nation}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <TabList onChange={(_e, newValue) => setNation(newValue)}>
+          <TabList variant="scrollable" onChange={(_e, newValue) => setNation(newValue)}>
             {tabKeys.map((nation) => (
               <Tab key={nation} label={nation} value={nation} />
             ))}

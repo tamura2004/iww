@@ -17,8 +17,8 @@ export const BasePanel = ({
       sx={{
         p: 2,
         m: 1,
-        width: "47%",
-        height: "22vh",
+        width: "44%",
+        height: "20vh",
         bgcolor: NationColor[nation],
         borderRadius: 2,
         touchAction: "none",

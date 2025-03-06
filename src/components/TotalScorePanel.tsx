@@ -8,11 +8,7 @@ type Props = {
   totalScore: number;
 };
 
-export const TotalScorePanel = ({
-  nation,
-  label,
-  totalScore,
-}: Props) => {
+export const TotalScorePanel = ({ nation, label, totalScore }: Props) => {
   return (
     <BasePanel nation={nation}>
       <Typography
@@ -23,11 +19,18 @@ export const TotalScorePanel = ({
           left: 12,
           verticalAlign: "bottom",
           fontWeight: "bold",
+          fontSize: { sm: "3vh", xs: "2.5vh" },
         }}
       >
         {label}
       </Typography>
-      <Box sx={{ typography: "h1", fontWeight: "bold", fontSize: "12vh" }}>
+      <Box
+        sx={{
+          typography: "h1",
+          fontWeight: "bold",
+          fontSize: { sm: "12vh", xs: "8vh" },
+        }}
+      >
         {totalScore}
       </Box>
     </BasePanel>
