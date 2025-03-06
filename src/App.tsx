@@ -18,7 +18,8 @@ const darkTheme = createTheme({
 
 export default function App() {
   const [nation, setNation] = useState(Nation.Aztec);
-  const { setNationCategoryScore, getNationTotalScore } = useWorldScore();
+  const { setNationCategoryScore, getNationScore, getNationTotalScore } =
+    useWorldScore();
   const tabKeys = [...Object.values(Nation), "順位"];
   return (
     <ThemeProvider theme={darkTheme}>
@@ -37,6 +38,7 @@ export default function App() {
             nation={nation}
             setNationCategoryScore={setNationCategoryScore}
             getNationTotalScore={getNationTotalScore}
+            getNationScore={getNationScore}
           />
         ))}
         <RankingPanel getNationTotalScore={getNationTotalScore} />

@@ -3,25 +3,24 @@ import { Box, Typography } from "@mui/material";
 import { BasePanel } from "./BasePanel.tsx";
 import { Category } from "../models/Category.ts";
 import { Nation } from "../models/Nation.ts";
+import { Score } from "../hooks/useWorldScore.ts";
 
 type Props = {
   nation: Nation;
   category: Category;
-  setCategoryScore: (category: Category, score: number) => void;
+  score: Score;
+  setCategoryScore: (category: Category, score: Score) => void;
 };
 
 export const FixedScorePanel = ({
   nation,
   category,
+  score,
   setCategoryScore,
 }: Props) => {
-  const [score, setScore] = React.useState(0);
+  const { baseScore } = score;
   const addScore = (diff: number) => {
-    setScore((prevScore) => {
-      const newScore = prevScore + diff;
-      setCategoryScore(category, newScore);
-      return newScore;
-    });
+    setCategoryScore(category, { baseScore: baseScore + diff, multiplier: 1 });
   };
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     const { top, height } = event.currentTarget.getBoundingClientRect();
@@ -48,7 +47,7 @@ export const FixedScorePanel = ({
         {category}
       </Typography>
       <Box sx={{ typography: "h1", fontWeight: "bold", fontSize: "12vh" }}>
-        {score}
+        {baseScore}
       </Box>
     </BasePanel>
   );

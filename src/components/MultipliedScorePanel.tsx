@@ -2,32 +2,28 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import { BasePanel } from "./BasePanel.tsx";
 import { Category } from "../models/Category.ts";
-import {Nation} from "../models/Nation.ts";
+import { Nation } from "../models/Nation.ts";
+import { Score } from "../hooks/useWorldScore.ts";
 
 type Props = {
   nation: Nation;
   category: Category;
-  setCategoryScore: (category: Category, score: number) => void;
+  score: Score;
+  setCategoryScore: (category: Category, score: Score) => void;
 };
 
-export const MultipliedScorePanel = ({ nation, category, setCategoryScore }: Props) => {
-  const [basePoint, setBasePoint] = React.useState(0);
-  const [multiplier, setMultiplier] = React.useState(0);
-  const total = basePoint * multiplier;
-  const updateBasePoint = (diff: number) => {
-    setBasePoint((prevBasePoint) => {
-      const newBasePoint = prevBasePoint + diff;
-      setCategoryScore(category, newBasePoint * multiplier);
-      return newBasePoint;
-    });
-  }
-  const updateMultiplier = (diff: number) => {
-    setMultiplier((prevMultiplier) => {
-      const newMultiplier = prevMultiplier + diff;
-      setCategoryScore(category, basePoint * newMultiplier);
-      return newMultiplier;
-    });
-  }
+export const MultipliedScorePanel = ({
+  nation,
+  category,
+  score,
+  setCategoryScore,
+}: Props) => {
+  const { baseScore, multiplier } = score;
+  const total = baseScore * multiplier;
+  const updateBasePoint = (diff: number) =>
+    setCategoryScore(category, { baseScore: baseScore + diff, multiplier });
+  const updateMultiplier = (diff: number) =>
+    setCategoryScore(category, { baseScore, multiplier: multiplier + diff });
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     const { left, width, top, height } =
       event.currentTarget.getBoundingClientRect();
@@ -59,7 +55,7 @@ export const MultipliedScorePanel = ({ nation, category, setCategoryScore }: Pro
         {category}
       </Typography>
       <Box sx={{ typography: "h1", fontWeight: "bold", fontSize: "12vh" }}>
-        {basePoint}
+        {baseScore}
       </Box>
       <Typography variant="h2">X</Typography>
       <Box sx={{ typography: "h1", fontWeight: "bold", fontSize: "12vh" }}>

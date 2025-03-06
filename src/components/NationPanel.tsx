@@ -5,24 +5,27 @@ import { Box } from "@mui/material";
 import { TotalScorePanel } from "./TotalScorePanel.tsx";
 import { FixedScorePanel } from "./FixedScorePanel.tsx";
 import { MultipliedScorePanel } from "./MultipliedScorePanel.tsx";
+import { Score } from "../hooks/useWorldScore.ts";
 
 type Props = {
   nation: Nation;
   setNationCategoryScore: (
     nation: Nation,
     category: Category,
-    score: number,
+    score: Score,
   ) => void;
   getNationTotalScore: (nation: Nation) => number;
+  getNationScore: (nation: Nation) => Record<Category, Score>;
 };
 
 export const NationPanel = ({
   nation,
   setNationCategoryScore,
-  getNationTotalScore
+  getNationTotalScore,
+  getNationScore,
 }: Props) => {
   const totalScore = getNationTotalScore(nation);
-  const setCategoryScore = (category: Category, score: number) =>
+  const setCategoryScore = (category: Category, score: Score) =>
     setNationCategoryScore(nation, category, score);
   return (
     <TabPanel value={nation} sx={{ padding: 0 }}>
@@ -45,16 +48,18 @@ export const NationPanel = ({
             />
           ) : category === Category.Fix ? (
             <FixedScorePanel
-              category={category}
-              setCategoryScore={setCategoryScore}
               nation={nation}
+              category={category}
+              score={getNationScore(nation)[category]}
+              setCategoryScore={setCategoryScore}
             />
           ) : (
             <MultipliedScorePanel
               key={category}
-              category={category}
-              setCategoryScore={setCategoryScore}
               nation={nation}
+              category={category}
+              score={getNationScore(nation)[category]}
+              setCategoryScore={setCategoryScore}
             />
           ),
         )}

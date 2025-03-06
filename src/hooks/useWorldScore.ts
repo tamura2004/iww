@@ -2,22 +2,23 @@ import { Nation } from "../models/Nation.ts";
 import { Category } from "../models/Category.ts";
 import { useState } from "react";
 
-type WorldScore = Record<Nation, Record<Category, number>>;
-
-const getInitialNationScore = (nation: Nation) => {
-  return {
-    [nation]: Object.values(Category).reduce(
-      (acc, category) => {
-        return { ...acc, [category]: 0 };
-      },
-      {} as Record<Category, number>,
-    ),
-  };
+export type Score = {
+  baseScore: number;
+  multiplier: number;
 };
-
-const initialWorldScore = Object.values(Nation).reduce((acc, nation) => {
-  return { ...acc, ...getInitialNationScore(nation) };
-}, {} as WorldScore);
+export type NationScore = Record<Category, Score>;
+export type WorldScore = Record<Nation, NationScore>;
+const initialWorldScore: WorldScore = Object.values(Nation).reduce(
+  (acc, nation) => {
+    return {
+      ...acc,
+      [nation]: Object.values(Category).reduce((acc, category) => {
+        return { ...acc, [category]: { baseScore: 0, multiplier: 0 } };
+      }, {} as NationScore),
+    };
+  },
+  {} as WorldScore,
+);
 
 export const useWorldScore = () => {
   const [worldScore, setWorldScore] = useState(initialWorldScore);
@@ -25,7 +26,7 @@ export const useWorldScore = () => {
   const setNationCategoryScore = (
     nation: Nation,
     category: Category,
-    score: number,
+    score: Score,
   ) => {
     setWorldScore({
       ...worldScore,
@@ -38,10 +39,14 @@ export const useWorldScore = () => {
 
   const getNationTotalScore = (nation: Nation) => {
     return Object.values(worldScore[nation]).reduce(
-      (acc, score) => acc + score,
+      (acc, score) => acc + score.baseScore * score.multiplier,
       0,
     );
   };
 
-  return { setNationCategoryScore, getNationTotalScore };
+  const getNationScore = (nation: Nation) => {
+    return worldScore[nation];
+  };
+
+  return { getNationScore, setNationCategoryScore, getNationTotalScore };
 };
