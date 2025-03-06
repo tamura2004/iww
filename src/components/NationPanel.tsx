@@ -8,23 +8,20 @@ import { MultipliedScorePanel } from "./MultipliedScorePanel.tsx";
 
 type Props = {
   nation: Nation;
-  nationScore: Record<Category, number>;
   setNationCategoryScore: (
     nation: Nation,
     category: Category,
     score: number,
   ) => void;
+  getNationTotalScore: (nation: Nation) => number;
 };
 
 export const NationPanel = ({
   nation,
-  nationScore,
   setNationCategoryScore,
+  getNationTotalScore
 }: Props) => {
-  const totalScore = Object.values(nationScore).reduce(
-    (acc, score) => acc + score,
-    0,
-  );
+  const totalScore = getNationTotalScore(nation);
   const setCategoryScore = (category: Category, score: number) =>
     setNationCategoryScore(nation, category, score);
   return (

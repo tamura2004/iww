@@ -22,7 +22,11 @@ const initialWorldScore = Object.values(Nation).reduce((acc, nation) => {
 export const useWorldScore = () => {
   const [worldScore, setWorldScore] = useState(initialWorldScore);
 
-  const setNationCategoryScore = (nation: Nation, category: Category, score: number) => {
+  const setNationCategoryScore = (
+    nation: Nation,
+    category: Category,
+    score: number,
+  ) => {
     setWorldScore({
       ...worldScore,
       [nation]: {
@@ -30,7 +34,14 @@ export const useWorldScore = () => {
         [category]: score,
       },
     });
-  }
+  };
 
-  return { worldScore, setNationCategoryScore };
+  const getNationTotalScore = (nation: Nation) => {
+    return Object.values(worldScore[nation]).reduce(
+      (acc, score) => acc + score,
+      0,
+    );
+  };
+
+  return { setNationCategoryScore, getNationTotalScore };
 };

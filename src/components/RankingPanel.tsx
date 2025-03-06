@@ -1,19 +1,16 @@
-import {Nation, NationColor} from "../models/Nation.ts";
-import { Category } from "../models/Category.ts";
+import { Nation, NationColor } from "../models/Nation.ts";
 import TabPanel from "@mui/lab/TabPanel";
 import { Box } from "@mui/material";
 
 type Props = {
-  worldScore: Record<Nation, Record<Category, number>>;
+  getNationTotalScore: (nation: Nation) => number;
 };
 
-export const RankingPanel = ({ worldScore }: Props) => {
-  const ranking = Object.entries(worldScore)
-    .map(([nation, nationScore]) => ({
-      nation,
-      score: Object.values(nationScore).reduce((acc, score) => acc + score, 0),
-    }))
-    .sort((a, b) => b.score - a.score);
+export const RankingPanel = ({ getNationTotalScore }: Props) => {
+  const ranking = Object.values(Nation).map((nation) => ({
+    nation,
+    score: getNationTotalScore(nation),
+  })).sort((a, b) => b.score - a.score);
 
   return (
     <TabPanel value="順位" sx={{ padding: 0 }}>
