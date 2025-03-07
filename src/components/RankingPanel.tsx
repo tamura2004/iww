@@ -1,12 +1,16 @@
 import { Nation, NationColor } from "../models/Nation.ts";
 import TabPanel from "@mui/lab/TabPanel";
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 
 type Props = {
   getNationTotalScore: (nation: Nation) => number;
+  resetWorldScore: () => void;
 };
 
-export const RankingPanel = ({ getNationTotalScore }: Props) => {
+export const RankingPanel = ({
+  getNationTotalScore,
+  resetWorldScore,
+}: Props) => {
   const ranking = Object.values(Nation)
     .map((nation) => ({
       nation,
@@ -21,7 +25,7 @@ export const RankingPanel = ({ getNationTotalScore }: Props) => {
           display: "flex",
           flexDirection: "row",
           height: "90vh",
-          justifyContent: "center",
+          justifyContent: "flex-end",
           flexWrap: "wrap",
         }}
       >
@@ -71,6 +75,15 @@ export const RankingPanel = ({ getNationTotalScore }: Props) => {
             </Box>
           </Box>
         ))}
+        <Button
+          variant="outlined"
+          sx={{
+            m: 2,
+          }}
+          onClick={resetWorldScore}
+        >
+          新しいゲームを開始する
+        </Button>
       </Box>
     </TabPanel>
   );

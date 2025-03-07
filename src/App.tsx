@@ -18,15 +18,22 @@ const darkTheme = createTheme({
 
 export default function App() {
   const [nation, setNation] = useState(Nation.Aztec);
-  const { setNationCategoryScore, getNationScore, getNationTotalScore } =
-    useWorldScore();
+  const {
+    setNationCategoryScore,
+    getNationScore,
+    getNationTotalScore,
+    resetWorldScore,
+  } = useWorldScore();
   const tabKeys = [...Object.values(Nation), "順位"];
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <TabContext value={nation}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <TabList variant="scrollable" onChange={(_e, newValue) => setNation(newValue)}>
+          <TabList
+            variant="scrollable"
+            onChange={(_e, newValue) => setNation(newValue)}
+          >
             {tabKeys.map((nation) => (
               <Tab key={nation} label={nation} value={nation} />
             ))}
@@ -41,7 +48,10 @@ export default function App() {
             getNationScore={getNationScore}
           />
         ))}
-        <RankingPanel getNationTotalScore={getNationTotalScore} />
+        <RankingPanel
+          getNationTotalScore={getNationTotalScore}
+          resetWorldScore={resetWorldScore}
+        />
       </TabContext>
     </ThemeProvider>
   );

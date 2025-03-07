@@ -58,5 +58,14 @@ export const useWorldScore = () => {
     return worldScore[nation];
   };
 
-  return { getNationScore, setNationCategoryScore, getNationTotalScore };
+  const resetWorldScore = () => {
+    setDoc(doc(db, "score", "score"), { score: initialWorldScore }).then();
+  };
+
+  return {
+    getNationScore,
+    setNationCategoryScore,
+    getNationTotalScore,
+    resetWorldScore,
+  };
 };
