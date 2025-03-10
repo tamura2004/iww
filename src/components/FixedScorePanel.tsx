@@ -1,9 +1,10 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { BasePanel } from "./BasePanel.tsx";
 import { Category } from "../models/Category.ts";
 import { Nation } from "../models/Nation.ts";
 import { Score } from "../hooks/useWorldScore.ts";
+import { ScoreNumber } from "./ScoreNumber.tsx";
 
 type Props = {
   nation: Nation;
@@ -47,9 +48,7 @@ export const FixedScorePanel = ({
       >
         {category}
       </Typography>
-      <Box sx={{ typography: "h1", fontWeight: "bold", fontSize: { sm: "12vh", xs: "8vh" } }}>
-        {baseScore}
-      </Box>
+      <ScoreNumber score={baseScore} withOperator />
     </BasePanel>
   );
 };

@@ -1,6 +1,7 @@
-import { Box, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { BasePanel } from "./BasePanel.tsx";
 import { Nation } from "../models/Nation.ts";
+import { ScoreNumber } from "./ScoreNumber.tsx";
 
 type Props = {
   nation: Nation;
@@ -24,15 +25,7 @@ export const TotalScorePanel = ({ nation, label, totalScore }: Props) => {
       >
         {label}
       </Typography>
-      <Box
-        sx={{
-          typography: "h1",
-          fontWeight: "bold",
-          fontSize: { sm: "12vh", xs: "8vh" },
-        }}
-      >
-        {totalScore}
-      </Box>
+      <ScoreNumber score={totalScore} />
     </BasePanel>
   );
 };

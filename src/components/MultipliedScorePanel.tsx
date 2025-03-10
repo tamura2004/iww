@@ -1,9 +1,11 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { BasePanel } from "./BasePanel.tsx";
 import { Category } from "../models/Category.ts";
 import { Nation } from "../models/Nation.ts";
 import { Score } from "../hooks/useWorldScore.ts";
+import { ScoreNumber } from "./ScoreNumber.tsx";
+import { TotalNumber } from "./TotalNumber.tsx";
 
 type Props = {
   nation: Nation;
@@ -55,40 +57,15 @@ export const MultipliedScorePanel = ({
       >
         {category}
       </Typography>
-      <Box
-        sx={{
-          typography: "h1",
-          fontWeight: "bold",
-          fontSize: { sm: "12vh", xs: "8vh" },
-        }}
+      <ScoreNumber score={baseScore} withOperator />
+      <Typography
+        variant="h2"
+        sx={{ fontSize: { sm: "5vh", xs: "3vh" }, m: 1 }}
       >
-        {baseScore}
-      </Box>
-      <Typography variant="h2" sx={{ fontSize: { sm: "6vh", xs: "4vh" } }}>
         X
       </Typography>
-      <Box
-        sx={{
-          typography: "h1",
-          fontWeight: "bold",
-          fontSize: { sm: "12vh", xs: "8vh" },
-        }}
-      >
-        {multiplier}
-      </Box>
-      <Typography
-        variant="h5"
-        sx={{
-          position: "absolute",
-          bottom: 12,
-          right: 12,
-          verticalAlign: "bottom",
-          fontWeight: "bold",
-          fontSize: { sm: "3vh", xs: "2vh" },
-        }}
-      >
-        {total}
-      </Typography>
+      <ScoreNumber score={multiplier} withOperator />
+      <TotalNumber value={total} />
     </BasePanel>
   );
 };

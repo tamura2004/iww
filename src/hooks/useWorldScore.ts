@@ -37,6 +37,9 @@ export const useWorldScore = () => {
     category: Category,
     score: Score,
   ) => {
+    if (score.baseScore < 0 || score.multiplier < 0) {
+      return;
+    }
     const newWorldScore = {
       ...worldScore,
       [nation]: {
