@@ -7,7 +7,6 @@ import Tab from "@mui/material/Tab";
 import { useState } from "react";
 import { Nation } from "./models/Nation.ts";
 import { NationPanel } from "./components/NationPanel.tsx";
-import { useWorldScore } from "./hooks/useWorldScore.ts";
 import { RankingPanel } from "./components/RankingPanel.tsx";
 
 const darkTheme = createTheme({
@@ -18,12 +17,6 @@ const darkTheme = createTheme({
 
 export default function App() {
   const [nation, setNation] = useState(Nation.Aztec);
-  const {
-    setNationCategoryScore,
-    getNationScore,
-    getNationTotalScore,
-    resetWorldScore,
-  } = useWorldScore();
   const tabKeys = [...Object.values(Nation), "順位"];
   return (
     <ThemeProvider theme={darkTheme}>
@@ -43,15 +36,9 @@ export default function App() {
           <NationPanel
             key={nation}
             nation={nation}
-            setNationCategoryScore={setNationCategoryScore}
-            getNationTotalScore={getNationTotalScore}
-            getNationScore={getNationScore}
           />
         ))}
-        <RankingPanel
-          getNationTotalScore={getNationTotalScore}
-          resetWorldScore={resetWorldScore}
-        />
+        <RankingPanel/>
       </TabContext>
     </ThemeProvider>
   );

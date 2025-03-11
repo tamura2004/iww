@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import {
+  collection,
   getFirestore,
 } from "firebase/firestore";
 
@@ -12,7 +13,6 @@ const firebaseConfig = {
   messagingSenderId: "1096592466642",
   appId: "1:1096592466642:web:f03ea81d304964f1f1030b",
 };
-
 const app = initializeApp(firebaseConfig);
-
-export const db = getFirestore(app);
+const db = getFirestore(app);
+export const scoreCollection = collection(db, "score");
