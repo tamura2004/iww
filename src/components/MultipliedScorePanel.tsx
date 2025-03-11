@@ -3,9 +3,9 @@ import { Typography } from "@mui/material";
 import { BasePanel } from "./BasePanel.tsx";
 import { Category } from "../models/Category.ts";
 import { Nation } from "../models/Nation.ts";
+import { Score } from "../hooks/useNationTotalScore.ts";
 import { ScoreNumber } from "./ScoreNumber.tsx";
 import { TotalNumber } from "./TotalNumber.tsx";
-import { Score } from "../models/Score.ts";
 
 type Props = {
   nation: Nation;
