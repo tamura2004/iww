@@ -5,15 +5,28 @@ import { Box } from "@mui/material";
 import { TotalScorePanel } from "./TotalScorePanel.tsx";
 import { FixedScorePanel } from "./FixedScorePanel.tsx";
 import { MultipliedScorePanel } from "./MultipliedScorePanel.tsx";
-import { useNationScore } from "../hooks/useNationScore.ts";
+import { Score } from "../hooks/useWorldScore.ts";
 
 type Props = {
   nation: Nation;
+  setNationCategoryScore: (
+    nation: Nation,
+    category: Category,
+    score: Score,
+  ) => void;
+  getNationTotalScore: (nation: Nation) => number;
+  getNationScore: (nation: Nation) => Record<Category, Score>;
 };
 
-export const NationPanel = ({ nation }: Props) => {
-  const { nationScore, nationTotalScore, setCategoryScore } =
-    useNationScore(nation);
+export const NationPanel = ({
+  nation,
+  setNationCategoryScore,
+  getNationTotalScore,
+  getNationScore,
+}: Props) => {
+  const totalScore = getNationTotalScore(nation);
+  const setCategoryScore = (category: Category, score: Score) =>
+    setNationCategoryScore(nation, category, score);
   return (
     <TabPanel value={nation} sx={{ padding: 0 }}>
       <Box
@@ -30,14 +43,14 @@ export const NationPanel = ({ nation }: Props) => {
             <TotalScorePanel
               key={category}
               label={category}
-              totalScore={nationTotalScore}
+              totalScore={totalScore}
               nation={nation}
             />
           ) : category === Category.Fix ? (
             <FixedScorePanel
               nation={nation}
               category={category}
-              score={nationScore[category]}
+              score={getNationScore(nation)[category]}
               setCategoryScore={setCategoryScore}
             />
           ) : (
@@ -45,7 +58,7 @@ export const NationPanel = ({ nation }: Props) => {
               key={category}
               nation={nation}
               category={category}
-              score={nationScore[category]}
+              score={getNationScore(nation)[category]}
               setCategoryScore={setCategoryScore}
             />
           ),

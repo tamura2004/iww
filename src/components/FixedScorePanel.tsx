@@ -3,7 +3,7 @@ import { Typography } from "@mui/material";
 import { BasePanel } from "./BasePanel.tsx";
 import { Category } from "../models/Category.ts";
 import { Nation } from "../models/Nation.ts";
-import { Score } from "../hooks/useNationTotalScore.ts";
+import { Score } from "../hooks/useWorldScore.ts";
 import { ScoreNumber } from "./ScoreNumber.tsx";
 
 type Props = {

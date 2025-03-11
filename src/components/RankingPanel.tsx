@@ -1,14 +1,20 @@
 import { Nation, NationColor } from "../models/Nation.ts";
 import TabPanel from "@mui/lab/TabPanel";
-import { Box } from "@mui/material";
-import { useNationTotalScore } from "../hooks/useNationTotalScore.ts";
+import { Box, Button } from "@mui/material";
 
-export const RankingPanel = () => {
-  const { nationTotalScore } = useNationTotalScore();
+type Props = {
+  getNationTotalScore: (nation: Nation) => number;
+  resetWorldScore: () => void;
+};
+
+export const RankingPanel = ({
+  getNationTotalScore,
+  resetWorldScore,
+}: Props) => {
   const ranking = Object.values(Nation)
     .map((nation) => ({
       nation,
-      score: nationTotalScore[nation],
+      score: getNationTotalScore(nation),
     }))
     .sort((a, b) => b.score - a.score);
 
@@ -69,6 +75,15 @@ export const RankingPanel = () => {
             </Box>
           </Box>
         ))}
+        <Button
+          variant="outlined"
+          sx={{
+            m: 2,
+          }}
+          onClick={resetWorldScore}
+        >
+          新しいゲームを開始する
+        </Button>
       </Box>
     </TabPanel>
   );
