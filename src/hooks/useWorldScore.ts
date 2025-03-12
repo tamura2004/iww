@@ -1,7 +1,7 @@
 import { Nation } from "../models/Nation.ts";
 import { Category } from "../models/Category.ts";
 import { useEffect, useState } from "react";
-import { doc, onSnapshot, setDoc } from "firebase/firestore";
+import { doc, onSnapshot, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase.ts";
 
 export type Score = {
@@ -40,14 +40,12 @@ export const useWorldScore = () => {
     if (score.baseScore < 0 || score.multiplier < 0) {
       return;
     }
-    const newWorldScore = {
-      ...worldScore,
-      [nation]: {
-        ...worldScore[nation],
-        [category]: score,
-      },
-    };
-    setDoc(doc(db, "score", "score"), { score: newWorldScore }).then();
+    const newNationScore = {
+      ...worldScore[nation],
+      [category]: score,
+    }
+    updateDoc(doc(db, "score", "score"), { [`score.${nation}`]: newNationScore }).then();
+
   };
 
   const getNationTotalScore = (nation: Nation) => {
