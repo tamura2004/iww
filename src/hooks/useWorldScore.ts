@@ -40,11 +40,7 @@ export const useWorldScore = () => {
     if (score.baseScore < 0 || score.multiplier < 0) {
       return;
     }
-    const newNationScore = {
-      ...worldScore[nation],
-      [category]: score,
-    }
-    updateDoc(doc(db, "score", "score"), { [`score.${nation}`]: newNationScore }).then();
+    updateDoc(doc(db, "score", "score"), { [`score.${nation}.${category}`]: score }).then();
 
   };
 
