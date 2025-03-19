@@ -48,6 +48,7 @@ export const NationPanel = ({
             />
           ) : category === Category.Fix ? (
             <FixedScorePanel
+              key={category}
               nation={nation}
               category={category}
               score={getNationScore(nation)[category]}
