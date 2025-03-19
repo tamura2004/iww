@@ -9,6 +9,7 @@ import { Nation } from "./models/Nation.ts";
 import { NationPanel } from "./components/NationPanel.tsx";
 import { useWorldScore } from "./hooks/useWorldScore.ts";
 import { RankingPanel } from "./components/RankingPanel.tsx";
+import {SetupPanel} from "./components/SetupPanel.tsx";
 
 const darkTheme = createTheme({
   palette: {
@@ -24,7 +25,7 @@ export default function App() {
     getNationTotalScore,
     resetWorldScore,
   } = useWorldScore();
-  const tabKeys = [...Object.values(Nation), "順位"];
+  const tabKeys = ["設定", ...Object.values(Nation), "順位"];
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
@@ -39,6 +40,7 @@ export default function App() {
             ))}
           </TabList>
         </Box>
+        <SetupPanel />
         {Object.values(Nation).map((nation) => (
           <NationPanel
             key={nation}
