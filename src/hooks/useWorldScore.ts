@@ -8,10 +8,13 @@ export type Score = {
   baseScore: number;
   multiplier: number;
 };
+type EventDate = {
+  date: Date;
+}
 export type NationScore = Record<Category, Score>;
-export type WorldScore = Record<Nation, NationScore>;
+export type WorldScore = Record<Nation, NationScore> & EventDate;
 
-const initialWorldScore: WorldScore = Object.values(Nation).reduce(
+const initialWorldScore = Object.values(Nation).reduce(
   (acc, nation) => {
     return {
       ...acc,

@@ -2,9 +2,9 @@ import { Category } from "../models/Category.ts";
 import { Nation } from "../models/Nation.ts";
 import TabPanel from "@mui/lab/TabPanel";
 import { Box } from "@mui/material";
-import { TotalScorePanel } from "./TotalScorePanel.tsx";
-import { FixedScorePanel } from "./FixedScorePanel.tsx";
-import { MultipliedScorePanel } from "./MultipliedScorePanel.tsx";
+import { TotalScoreCard } from "./TotalScoreCard.tsx";
+import { FixedScoreCard } from "./FixedScoreCard.tsx";
+import { MultipliedScoreCard } from "./MultipliedScoreCard.tsx";
 import { Score } from "../hooks/useWorldScore.ts";
 
 type Props = {
@@ -40,14 +40,14 @@ export const NationPanel = ({
       >
         {Object.values(Category).map((category) =>
           category === Category.Total ? (
-            <TotalScorePanel
+            <TotalScoreCard
               key={category}
               label={category}
               totalScore={totalScore}
               nation={nation}
             />
           ) : category === Category.Fix ? (
-            <FixedScorePanel
+            <FixedScoreCard
               key={category}
               nation={nation}
               category={category}
@@ -55,7 +55,7 @@ export const NationPanel = ({
               setCategoryScore={setCategoryScore}
             />
           ) : (
-            <MultipliedScorePanel
+            <MultipliedScoreCard
               key={category}
               nation={nation}
               category={category}

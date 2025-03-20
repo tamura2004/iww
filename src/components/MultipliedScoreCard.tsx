@@ -1,11 +1,10 @@
 import React from "react";
 import { Typography } from "@mui/material";
-import { BasePanel } from "./BasePanel.tsx";
+import { BaseScoreCard } from "./BaseScoreCard.tsx";
 import { Category } from "../models/Category.ts";
 import { Nation } from "../models/Nation.ts";
 import { Score } from "../hooks/useWorldScore.ts";
 import { ScoreNumber } from "./ScoreNumber.tsx";
-import { TotalNumber } from "./TotalNumber.tsx";
 
 type Props = {
   nation: Nation;
@@ -14,7 +13,7 @@ type Props = {
   setCategoryScore: (category: Category, score: Score) => void;
 };
 
-export const MultipliedScorePanel = ({
+export const MultipliedScoreCard = ({
   nation,
   category,
   score,
@@ -43,20 +42,12 @@ export const MultipliedScorePanel = ({
   };
 
   return (
-    <BasePanel onClick={handleClick} nation={nation}>
-      <Typography
-        variant="h5"
-        sx={{
-          position: "absolute",
-          top: 12,
-          left: 12,
-          verticalAlign: "bottom",
-          fontWeight: "bold",
-          fontSize: { sm: "3vh", xs: "2.5vh" },
-        }}
-      >
-        {category}
-      </Typography>
+    <BaseScoreCard
+      onClick={handleClick}
+      nation={nation}
+      label={category}
+      totalScore={total}
+    >
       <ScoreNumber score={baseScore} withOperator />
       <Typography
         variant="h2"
@@ -65,7 +56,6 @@ export const MultipliedScorePanel = ({
         X
       </Typography>
       <ScoreNumber score={multiplier} withOperator />
-      <TotalNumber value={total} />
-    </BasePanel>
+    </BaseScoreCard>
   );
 };

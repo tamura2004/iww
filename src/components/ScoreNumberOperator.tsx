@@ -15,7 +15,6 @@ export const ScoreNumberOperator = ({ operator }: Props) => {
     <Typography
       variant="h5"
       sx={{
-        fontWeight: "bold",
         fontSize: { sm: "3vh", xs: "2vh" },
       }}
     >
