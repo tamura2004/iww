@@ -9,7 +9,7 @@ import { Nation } from "./models/Nation.ts";
 import { NationPanel } from "./components/NationPanel.tsx";
 import { useWorldScore } from "./hooks/useWorldScore.ts";
 import { RankingPanel } from "./components/RankingPanel.tsx";
-import {SetupPanel} from "./components/SetupPanel.tsx";
+import { SetupPanel } from "./components/SetupPanel.tsx";
 
 const darkTheme = createTheme({
   palette: {
@@ -40,7 +40,7 @@ export default function App() {
             ))}
           </TabList>
         </Box>
-        <SetupPanel />
+        <SetupPanel getNationTotalScore={getNationTotalScore} />
         {Object.values(Nation).map((nation) => (
           <NationPanel
             key={nation}

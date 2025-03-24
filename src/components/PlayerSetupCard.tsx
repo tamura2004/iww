@@ -6,12 +6,14 @@ type Props = {
   name: string;
   handleChangePlayerName: (name: string) => void;
   handleChangeNation: (nation: Nation) => void;
+  players: string[];
 };
 
 export const PlayerSetupCard = ({
   name,
   handleChangePlayerName,
   handleChangeNation,
+  players,
 }: Props) => {
   return (
     <Box
@@ -33,7 +35,7 @@ export const PlayerSetupCard = ({
         {name}
       </Box>
       <Autocomplete
-        options={["alice", "bob", "charlie", "david", "eve"]}
+        options={players}
         sx={{ width: "30%" }}
         onChange={(_, value) => {
           if (value == null) return;

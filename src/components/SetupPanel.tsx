@@ -3,21 +3,30 @@ import { Box, Button, MenuItem, Select, Typography } from "@mui/material";
 import { useState } from "react";
 import { PlayerSetupCard } from "./PlayerSetupCard.tsx";
 import { Nation } from "../models/Nation.ts";
+import { usePlayers } from "../hooks/usePlayers.ts";
+import {useRecordAchievement} from "../hooks/useRecordAchievement.ts";
 
-export const SetupPanel = () => {
-  const [numberOfPlayers, setNumberOfPlayers] = useState(5);
+type Props = {
+  getNationTotalScore: (nation: Nation) => number;
+};
+
+export const SetupPanel = ({ getNationTotalScore }: Props) => {
+  const [numberOfPlayers, setNumberOfPlayers] = useState(3);
   const [playerNames, setPlayerNames] = useState<string[]>(
-    [...Array(numberOfPlayers)].map((_, i) => `プレイヤー${i + 1}`),
+    [...Array(7)].map((_, i) => `プレイヤー${i + 1}`),
   );
   const [nations, setNations] = useState<(Nation | null)[]>(
-    [...Array(numberOfPlayers)].map(() => null),
+    [...Array(7)].map(() => null),
   );
+  const [isGameStarted, setIsGameStarted] = useState(false);
+  const { players } = usePlayers();
+  const { recordAchievement } = useRecordAchievement();
 
   const isValid =
-    playerNames.every((name) => name.length > 0) &&
-    nations.every((nation) => nation !== null) &&
-    new Set(nations).size === numberOfPlayers &&
-    new Set(playerNames).size === numberOfPlayers;
+    playerNames.slice(0, numberOfPlayers).every((name) => name.length > 0) &&
+    nations.slice(0, numberOfPlayers).every((nation) => nation !== null) &&
+    new Set(nations.slice(0, numberOfPlayers)).size === numberOfPlayers &&
+    new Set(playerNames.slice(0, numberOfPlayers)).size === numberOfPlayers;
 
   const handlePlayerNameChange = (index: number) => (name: string) => {
     const newPlayerNames = [...playerNames];
@@ -31,6 +40,22 @@ export const SetupPanel = () => {
     setNations(newNations);
   };
 
+  const handleGameStart = () => {
+    setIsGameStarted(true);
+  };
+
+  const handleRecordAchievement = () => {
+    setIsGameStarted(false);
+    const achievements = nations.slice(0, numberOfPlayers).map((nation, index) => {
+      return {
+        nation: nation as Nation,
+        player: playerNames[index],
+        score: getNationTotalScore(nation as Nation),
+      }
+    });
+    recordAchievement(achievements);
+  };
+
   return (
     <TabPanel value="設定" sx={{ padding: 0 }}>
       <Box sx={{ display: "flex", flexDirection: "column", gap: 4, margin: 4 }}>
@@ -41,14 +66,18 @@ export const SetupPanel = () => {
           }}
           disabled={!isValid}
           onClick={() => {
-            console.log({
-              type: "DEBUG",
-              playerNames,
-              nations,
-            });
+            if (!isGameStarted) {
+              handleGameStart();
+            } else {
+              handleRecordAchievement();
+            }
           }}
         >
-          新しいゲームを開始する
+          {isValid
+            ? isGameStarted
+              ? "戦績を記録する"
+              : "新しいゲームを開始する"
+            : "プレイヤー名と帝国を設定してください"}
         </Button>
         <Box sx={{ display: "flex", gap: 4, alignItems: "center" }}>
           <Typography
@@ -83,6 +112,7 @@ export const SetupPanel = () => {
             name={`プレイヤー${i + 1}`}
             handleChangePlayerName={handlePlayerNameChange(i)}
             handleChangeNation={handleNationChange(i)}
+            players={players}
           />
         ))}
       </Box>
