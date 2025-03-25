@@ -4,7 +4,7 @@ import { useState } from "react";
 import { PlayerSetupCard } from "./PlayerSetupCard.tsx";
 import { Nation } from "../models/Nation.ts";
 import { usePlayers } from "../hooks/usePlayers.ts";
-import {useRecordAchievement} from "../hooks/useRecordAchievement.ts";
+import { useRecordAchievement } from "../hooks/useRecordAchievement.ts";
 
 type Props = {
   getNationTotalScore: (nation: Nation) => number;
@@ -18,7 +18,6 @@ export const SetupPanel = ({ getNationTotalScore }: Props) => {
   const [nations, setNations] = useState<(Nation | null)[]>(
     [...Array(7)].map(() => null),
   );
-  const [isGameStarted, setIsGameStarted] = useState(false);
   const { players } = usePlayers();
   const { recordAchievement } = useRecordAchievement();
 
@@ -40,19 +39,16 @@ export const SetupPanel = ({ getNationTotalScore }: Props) => {
     setNations(newNations);
   };
 
-  const handleGameStart = () => {
-    setIsGameStarted(true);
-  };
-
   const handleRecordAchievement = () => {
-    setIsGameStarted(false);
-    const achievements = nations.slice(0, numberOfPlayers).map((nation, index) => {
-      return {
-        nation: nation as Nation,
-        player: playerNames[index],
-        score: getNationTotalScore(nation as Nation),
-      }
-    });
+    const achievements = nations
+      .slice(0, numberOfPlayers)
+      .map((nation, index) => {
+        return {
+          nation: nation as Nation,
+          player: playerNames[index],
+          score: getNationTotalScore(nation as Nation),
+        };
+      });
     recordAchievement(achievements);
   };
 
@@ -65,19 +61,9 @@ export const SetupPanel = ({ getNationTotalScore }: Props) => {
             fontSize: { sm: "3vh", xs: "2.5vh" },
           }}
           disabled={!isValid}
-          onClick={() => {
-            if (!isGameStarted) {
-              handleGameStart();
-            } else {
-              handleRecordAchievement();
-            }
-          }}
+          onClick={handleRecordAchievement}
         >
-          {isValid
-            ? isGameStarted
-              ? "戦績を記録する"
-              : "新しいゲームを開始する"
-            : "プレイヤー名と帝国を設定してください"}
+          戦績を記録する
         </Button>
         <Box sx={{ display: "flex", gap: 4, alignItems: "center" }}>
           <Typography
