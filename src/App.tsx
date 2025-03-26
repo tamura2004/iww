@@ -10,6 +10,7 @@ import { NationPanel } from "./components/NationPanel.tsx";
 import { useWorldScore } from "./hooks/useWorldScore.ts";
 import { RankingPanel } from "./components/RankingPanel.tsx";
 import { SetupPanel } from "./components/SetupPanel.tsx";
+import { usePlayers } from "./hooks/usePlayers.ts";
 
 const darkTheme = createTheme({
   palette: {
@@ -25,6 +26,16 @@ export default function App() {
     getNationTotalScore,
     resetWorldScore,
   } = useWorldScore();
+  const {
+    isValid,
+    numberOfPlayers,
+    handleChangeNumOfPlayers,
+    selectablePlayers,
+    selectedPlayers,
+    selectedPlayerNations,
+    handlePlayerChange,
+    handleNationChange,
+  } = usePlayers();
   const tabKeys = ["設定", ...Object.values(Nation), "順位"];
   return (
     <ThemeProvider theme={darkTheme}>
@@ -40,7 +51,17 @@ export default function App() {
             ))}
           </TabList>
         </Box>
-        <SetupPanel getNationTotalScore={getNationTotalScore} />
+        <SetupPanel
+          getNationTotalScore={getNationTotalScore}
+          numberOfPlayers={numberOfPlayers}
+          handleChangeNumOfPlayers={handleChangeNumOfPlayers}
+          selectablePlayers={selectablePlayers}
+          selectedPlayers={selectedPlayers}
+          selectedPlayerNations={selectedPlayerNations}
+          handlePlayerChange={handlePlayerChange}
+          handleNationChange={handleNationChange}
+          isValid={isValid}
+        />
         {Object.values(Nation).map((nation) => (
           <NationPanel
             key={nation}

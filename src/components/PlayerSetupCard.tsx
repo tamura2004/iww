@@ -7,6 +7,8 @@ type Props = {
   handleChangePlayerName: (name: string) => void;
   handleChangeNation: (nation: Nation) => void;
   players: string[];
+  selectedPlayer: string;
+  selectedNation: Nation | null;
 };
 
 export const PlayerSetupCard = ({
@@ -14,6 +16,8 @@ export const PlayerSetupCard = ({
   handleChangePlayerName,
   handleChangeNation,
   players,
+  selectedPlayer,
+  selectedNation,
 }: Props) => {
   return (
     <Box
@@ -39,13 +43,12 @@ export const PlayerSetupCard = ({
         sx={{ width: "30%" }}
         onChange={(_, value) => {
           if (value == null) return;
-          console.log({
-            type: "DEBUG",
-            name: value,
-          });
           handleChangePlayerName(value);
         }}
-        renderInput={(params) => <TextField label="名前" {...params} />}
+        renderInput={(params) => (
+          <TextField label="名前" value={selectedPlayer} {...params} />
+        )}
+        value={selectedPlayer}
       />
       <Autocomplete
         options={Object.values(Nation)}
@@ -54,7 +57,9 @@ export const PlayerSetupCard = ({
           if (value == null) return;
           handleChangeNation(value);
         }}
-        renderInput={(params) => <TextField label="帝国" {...params} />}
+        renderInput={(params) => (
+          <TextField label="帝国" value={selectedNation} {...params} />
+        )}
       />
     </Box>
   );
