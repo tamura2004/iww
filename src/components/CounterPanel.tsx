@@ -8,7 +8,7 @@ export const CounterPanel = () => {
   return (
     <TabPanel value="メモ" sx={{ padding: 1 }}>
       <Box sx={{ display: "flex", flexDirection: "column", m: 2, gap: 1 }}>
-        <LabelM>算出資源</LabelM>
+        <LabelM>産出資源</LabelM>
         <Box sx={{ display: "flex", flexDirection: "row", gap: 2 }}>
           <Number color={grey[300]} />
           <Number color={grey[800]} />
