@@ -46,7 +46,7 @@ export const PlayerSetupCard = ({
           handleChangePlayerName(value);
         }}
         renderInput={(params) => (
-          <TextField label="名前" value={selectedPlayer} {...params} />
+          <TextField label="名前" {...params} />
         )}
         value={selectedPlayer}
       />
@@ -58,8 +58,9 @@ export const PlayerSetupCard = ({
           handleChangeNation(value);
         }}
         renderInput={(params) => (
-          <TextField label="帝国" value={selectedNation} {...params} />
+          <TextField label="帝国" {...params} />
         )}
+        value={selectedNation}
       />
     </Box>
   );
