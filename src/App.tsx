@@ -11,6 +11,7 @@ import { useWorldScore } from "./hooks/useWorldScore.ts";
 import { RankingPanel } from "./components/RankingPanel.tsx";
 import { SetupPanel } from "./components/SetupPanel.tsx";
 import { usePlayers } from "./hooks/usePlayers.ts";
+import {CounterPanel} from "./components/CounterPanel.tsx";
 
 const darkTheme = createTheme({
   palette: {
@@ -36,7 +37,7 @@ export default function App() {
     handlePlayerChange,
     handleNationChange,
   } = usePlayers();
-  const tabKeys = ["設定", ...Object.values(Nation), "順位"];
+  const tabKeys = ["メモ", "設定", ...Object.values(Nation), "順位"];
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
@@ -51,6 +52,7 @@ export default function App() {
             ))}
           </TabList>
         </Box>
+        <CounterPanel />
         <SetupPanel
           getNationTotalScore={getNationTotalScore}
           numberOfPlayers={numberOfPlayers}
