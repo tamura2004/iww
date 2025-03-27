@@ -1,5 +1,5 @@
 import { GameRecord } from "../hooks/useGameRecord.ts";
-import { Box, Typography } from "@mui/material";
+import {Box, Divider, Typography} from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 type Props = {
@@ -10,6 +10,7 @@ export const GameRecordCard = ({ gameRecord }: Props) => {
   const { gameDate, playerRecords } = gameRecord;
   return (
     <Box>
+      <Divider sx={{ marginTop: 2, marginBottom: 1 }}/>
       <Typography typography="h6">{gameDate}</Typography>
       <Box sx={{ display: "flex", gap: 2 }}>
         {playerRecords
@@ -27,7 +28,7 @@ export const GameRecordCard = ({ gameRecord }: Props) => {
               >
                 <Typography>{index + 1}位</Typography>
                 <AccountCircleIcon sx={{ fontSize: 48 }} />
-                <Typography>{playerRecord.nation}</Typography>
+                <Typography variant="caption">{playerRecord.nation}</Typography>
                 <Typography>{playerRecord.player}</Typography>
                 <Typography>{playerRecord.score}点</Typography>
               </Box>
