@@ -1,8 +1,16 @@
 import TabPanel from "@mui/lab/TabPanel";
-import { Box, Button, MenuItem, Select, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  MenuItem,
+  Select,
+  Typography,
+  Divider,
+} from "@mui/material";
 import { PlayerSetupCard } from "./PlayerSetupCard.tsx";
 import { Nation } from "../models/Nation.ts";
-import { useRecordAchievement } from "../hooks/useRecordAchievement.ts";
+import { useGameRecord } from "../hooks/useGameRecord.ts";
+import { GameRecordCard } from "./GameRecordCard.tsx";
 
 type Props = {
   getNationTotalScore: (nation: Nation) => number;
@@ -16,7 +24,7 @@ type Props = {
   isValid: boolean;
 };
 
-export const SetupPanel = ({
+export const GameRecordPanel = ({
   getNationTotalScore,
   numberOfPlayers,
   handleChangeNumOfPlayers,
@@ -27,21 +35,21 @@ export const SetupPanel = ({
   handleNationChange,
   isValid,
 }: Props) => {
-  const { recordAchievement } = useRecordAchievement();
+  const { addGameRecord, gameRecords } = useGameRecord();
 
-  const handleRecordAchievement = () => {
-    const achievements = selectedPlayerNations.map((nation, index) => {
+  const handleAddGameRecord = () => {
+    const playerRecords = selectedPlayerNations.map((nation, index) => {
       return {
         nation: nation as Nation,
         player: selectedPlayers[index],
         score: getNationTotalScore(nation as Nation),
       };
     });
-    recordAchievement(achievements);
+    addGameRecord(playerRecords);
   };
 
   return (
-    <TabPanel value="設定" sx={{ padding: 0 }}>
+    <TabPanel value="戦績" sx={{ padding: 0 }}>
       <Box sx={{ display: "flex", flexDirection: "column", gap: 4, margin: 4 }}>
         <Button
           variant="contained"
@@ -49,7 +57,7 @@ export const SetupPanel = ({
             fontSize: { sm: "3vh", xs: "2.5vh" },
           }}
           disabled={!isValid}
-          onClick={handleRecordAchievement}
+          onClick={handleAddGameRecord}
         >
           戦績を記録する
         </Button>
@@ -91,6 +99,15 @@ export const SetupPanel = ({
             selectedNation={selectedPlayerNations[i]}
           />
         ))}
+        <Divider />
+        <Box>
+          <Typography typography="h5">過去の戦績</Typography>
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+            {gameRecords.slice().sort((a,b) => a.gameDate > b.gameDate ? 1 : -1).map((gameRecord, index) => {
+              return <GameRecordCard gameRecord={gameRecord} key={index} />;
+            })}
+          </Box>
+        </Box>
       </Box>
     </TabPanel>
   );
