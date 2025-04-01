@@ -11,6 +11,7 @@ import { PlayerSetupCard } from "./PlayerSetupCard.tsx";
 import { Nation } from "../models/Nation.ts";
 import { useGameRecord } from "../hooks/useGameRecord.ts";
 import { GameRecordCard } from "./GameRecordCard.tsx";
+import { LastGameRecordCard } from "./LastGameRecordCard.tsx";
 
 type Props = {
   getNationTotalScore: (nation: Nation) => number;
@@ -35,7 +36,8 @@ export const GameRecordPanel = ({
   handleNationChange,
   isValid,
 }: Props) => {
-  const { addGameRecord, gameRecords } = useGameRecord();
+  const { addGameRecord, gameRecordsSortByGameDate, lastGameRecords } =
+    useGameRecord();
 
   const handleAddGameRecord = () => {
     const playerRecords = selectedPlayerNations.map((nation, index) => {
@@ -101,9 +103,13 @@ export const GameRecordPanel = ({
         ))}
         <Divider />
         <Box>
+          <LastGameRecordCard playerRecords={lastGameRecords} />
+        </Box>
+        <Divider />
+        <Box>
           <Typography typography="h5">過去の戦績</Typography>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            {gameRecords.slice().sort((a,b) => a.gameDate > b.gameDate ? 1 : -1).map((gameRecord, index) => {
+            {gameRecordsSortByGameDate.map((gameRecord, index) => {
               return <GameRecordCard gameRecord={gameRecord} key={index} />;
             })}
           </Box>

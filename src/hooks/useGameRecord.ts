@@ -7,12 +7,12 @@ export type PlayerRecord = {
   nation: Nation;
   player: string;
   score: number;
-}
+};
 
 export type GameRecord = {
-  gameDate: string,
-  playerRecords: PlayerRecord[]
-}
+  gameDate: string;
+  playerRecords: PlayerRecord[];
+};
 
 const gameRecordCollection = collection(db, "gameRecords");
 
@@ -34,12 +34,30 @@ export const useGameRecord = () => {
   useEffect(() => {
     const fetchGameRecords = async () => {
       const gameRecordsSnapshot = await getDocs(gameRecordCollection);
-      const fetchedGameRecords = gameRecordsSnapshot.docs
-        .map((doc) => doc.data() as GameRecord)
+      const fetchedGameRecords = gameRecordsSnapshot.docs.map(
+        (doc) => doc.data() as GameRecord,
+      );
       setGameRecords(fetchedGameRecords);
     };
     fetchGameRecords().then();
   }, []);
 
-  return { addGameRecord, gameRecords };
+  const gameRecordsSortByGameDate = gameRecords.slice().sort((a, b) => {
+    return a.gameDate > b.gameDate ? 1 : -1;
+  });
+
+  const lastGameRecords = gameRecordsSortByGameDate
+    .reverse()
+    .map((gameRecord) => gameRecord.playerRecords)
+    .flat()
+    .filter((elem, _, self) => self.find((e) => e.player === elem.player) === elem)
+    .slice()
+    .sort((a, b) => b.score - a.score);
+
+  return {
+    addGameRecord,
+    gameRecords,
+    gameRecordsSortByGameDate,
+    lastGameRecords,
+  };
 };
