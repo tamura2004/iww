@@ -42,8 +42,13 @@ export const useGameRecord = () => {
     fetchGameRecords().then();
   }, []);
 
+  const dateToNumber = (date: string) => {
+    const [year, month, day] = date.split(/[年月日]/).map(Number);
+    return year * 10000 + month * 100 + day;
+  }
+
   const gameRecordsSortByGameDate = gameRecords.slice().sort((a, b) => {
-    return a.gameDate > b.gameDate ? 1 : -1;
+    return dateToNumber(a.gameDate) - dateToNumber(b.gameDate);
   });
 
   const lastGameRecords = gameRecordsSortByGameDate
